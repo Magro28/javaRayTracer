@@ -1,10 +1,13 @@
 package com.magro.raytracer;
 
+import org.apache.commons.math3.analysis.function.Sqrt;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import static java.lang.Math.sqrt;
 
 /**
  * Raytracer main class
@@ -29,7 +32,9 @@ public class Main {
         Vector3D vertical = new Vector3D(0, viewport_height, 0);
 
         // lower_left_corner = origin - horizontal/2 - vertical/2 - vec3(0, 0, focal_length);
-        Vector3D lower_left_corner = origin.subtract(horizontal.scalarMultiply(1d / 2d)).subtract(vertical.scalarMultiply(1d / 2d)).subtract(new Vector3D(0, 0, focal_length));
+        Vector3D lower_left_corner = origin.subtract(horizontal.scalarMultiply(0.5))
+                .subtract(vertical.scalarMultiply(0.5))
+                .subtract(new Vector3D(0, 0, focal_length));
 
 
         // Render
@@ -53,24 +58,29 @@ public class Main {
     }
 
     private static Color rayColor(Ray r) {
-
-        if (hitSphere(new Vector3D(0, 0, -1), 0.5, r)) {
-            System.out.print(" Hit SPHERE ");
-            return new Color(1d, 0d, 0d);
+        double t = hitSphere(new Vector3D(0,0,-1), 0.5, r);
+        if (t > 0.0) {
+            Vector3D N = r.at(t).subtract(new Vector3D(0,0,-1));
+            return new Color(new Vector3D(N.getX()+1, N.getY()+1, N.getZ()+1).scalarMultiply(0.5));
         }
         Vector3D unit_direction = r.direction;
-        double t = 0.5 * (unit_direction.getY() + 1.0);
+        t = 0.5*(unit_direction.getY() + 1.0);
         Color color1 = new Color(1.0, 1.0, 1.0);
         Color color2 = new Color(0.5, 0.7, 1.0);
         return new Color(color1.colorVector.scalarMultiply(1.0 - t).add(color2.colorVector.scalarMultiply(t)));
     }
 
-    public static boolean hitSphere(final Vector3D center, double radius, final Ray r) {
+    public static double hitSphere(final Vector3D center, double radius, final Ray r) {
         Vector3D oc = r.origin.subtract(center);
         double a = (r.direction.dotProduct(r.direction));
         double b = 2.0 * (oc.dotProduct(r.direction));
         double c = oc.dotProduct(oc) - (radius * radius);
         double discriminant = (b * b) - (4 * a * c);
-        return (discriminant > 0);
+
+        if (discriminant < 0) {
+            return -1.0;
+        } else {
+            return (-b - sqrt(discriminant) ) / (2.0*a);
+        }
     }
 }
