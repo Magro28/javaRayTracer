@@ -38,8 +38,8 @@ public class Sphere implements Hitable{
         }
         rec.t = root;
         rec.p = r.at(rec.t);
-        rec.normal = (rec.p.subtract(center)).scalarMultiply(1.0 / radius);
-
+        Vector3D outward_normal = (rec.p.subtract(center)).scalarMultiply(1.0 / radius);
+        rec.setFaceNormal(r, outward_normal);
         return true;
 
     }
