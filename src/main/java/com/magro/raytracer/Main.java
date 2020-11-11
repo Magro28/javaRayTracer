@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Raytracer main class
+ *
  * @Mario Groß
  */
 public class Main {
@@ -16,7 +17,7 @@ public class Main {
         // Image
         final double aspect_ratio = 16.0 / 9.0;
         final int image_width = 400;
-        final int image_height = (int)(image_width / aspect_ratio);
+        final int image_height = (int) (image_width / aspect_ratio);
 
         // Camera
         double viewport_height = 2.0;
@@ -26,20 +27,21 @@ public class Main {
         Vector3D origin = new Vector3D(0d, 0d, 0d);
         Vector3D horizontal = new Vector3D(viewport_width, 0, 0);
         Vector3D vertical = new Vector3D(0, viewport_height, 0);
-        Vector3D lower_left_corner = origin.subtract(horizontal.scalarMultiply(1/2).subtract(vertical.scalarMultiply(1/2)).subtract(new Vector3D(0, 0, focal_length)));
+
+        // lower_left_corner = origin - horizontal/2 - vertical/2 - vec3(0, 0, focal_length);
+        Vector3D lower_left_corner = origin.subtract(horizontal.scalarMultiply(1d / 2d)).subtract(vertical.scalarMultiply(1d / 2d)).subtract(new Vector3D(0, 0, focal_length));
 
 
         // Render
-        String ppmImage = "P3\n"+image_width + " "+ image_height+ "\n255\n";
+        String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";
 
-        for (int j = image_height-1; j >= 0; --j) {
-           System.out.println("\rScanlines remaining: "+j);
+        for (int j = image_height - 1; j >= 0; --j) {
+            System.out.println("\rScanlines remaining: " + j);
             for (int i = 0; i < image_width; ++i) {
-                double u = (double)i / (image_width-1);
-                double v = (double) j / (image_height-1);
+                double u = (double) i / (image_width - 1);
+                double v = (double) j / (image_height - 1);
                 Ray r = new Ray(origin, lower_left_corner.add(horizontal.scalarMultiply(u).add(vertical.scalarMultiply(v)).subtract(origin)));
                 Color pixel_color = rayColor(r);
-
                 ppmImage += pixel_color.writeColor();
             }
         }
@@ -51,11 +53,24 @@ public class Main {
     }
 
     private static Color rayColor(Ray r) {
-            Vector3D unit_direction = r.direction;
-            double t = 0.5*(unit_direction.getY() + 1.0);
-            Color color1 = new Color(1.0, 1.0, 1.0);
-            Color color2 = new Color(0.5, 0.7, 1.0);
-            return new Color(color1.colorVector.scalarMultiply(1.0-t).add(color2.colorVector.scalarMultiply(t)));
 
+        if (hitSphere(new Vector3D(0, 0, -1), 0.5, r)) {
+            System.out.print(" Hit SPHERE ");
+            return new Color(1d, 0d, 0d);
+        }
+        Vector3D unit_direction = r.direction;
+        double t = 0.5 * (unit_direction.getY() + 1.0);
+        Color color1 = new Color(1.0, 1.0, 1.0);
+        Color color2 = new Color(0.5, 0.7, 1.0);
+        return new Color(color1.colorVector.scalarMultiply(1.0 - t).add(color2.colorVector.scalarMultiply(t)));
+    }
+
+    public static boolean hitSphere(final Vector3D center, double radius, final Ray r) {
+        Vector3D oc = r.origin.subtract(center);
+        double a = (r.direction.dotProduct(r.direction));
+        double b = 2.0 * (oc.dotProduct(r.direction));
+        double c = oc.dotProduct(oc) - (radius * radius);
+        double discriminant = (b * b) - (4 * a * c);
+        return (discriminant > 0);
     }
 }
