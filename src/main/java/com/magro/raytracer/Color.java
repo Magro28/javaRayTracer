@@ -7,6 +7,14 @@ public class Color {
 
     public Vector3D colorVector;
 
+    public Color(Color color){
+        this.colorVector = color.colorVector;
+    }
+
+    public Color(Vector3D vector3D){
+        this.colorVector = vector3D;
+    }
+
     public Color(double x, double y, double z){
         this.colorVector = new Vector3D(x,y,z);
     }
