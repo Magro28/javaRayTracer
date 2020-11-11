@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 /**
@@ -72,15 +73,26 @@ public class Main {
 
     public static double hitSphere(final Vector3D center, double radius, final Ray r) {
         Vector3D oc = r.origin.subtract(center);
-        double a = (r.direction.dotProduct(r.direction));
-        double b = 2.0 * (oc.dotProduct(r.direction));
-        double c = oc.dotProduct(oc) - (radius * radius);
-        double discriminant = (b * b) - (4 * a * c);
+
+        double a = lengthSquared(r.direction);
+        double half_b = (oc.dotProduct(r.direction));
+        double c = lengthSquared(oc) - (radius * radius);
+        double discriminant = (half_b * half_b) - (a * c);
 
         if (discriminant < 0) {
             return -1.0;
         } else {
-            return (-b - sqrt(discriminant) ) / (2.0*a);
+            return (-half_b - sqrt(discriminant) ) / a;
         }
     }
+
+    public static double length(Vector3D v)  {
+        return sqrt(lengthSquared(v));
+    }
+
+    public static double lengthSquared(Vector3D v)  {
+        return pow(v.getX(),2) + pow(v.getY(),2) + pow(v.getZ(),2);
+    }
+
+
 }
