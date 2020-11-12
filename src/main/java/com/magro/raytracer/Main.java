@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static com.magro.raytracer.Utils.infinity;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -22,6 +23,11 @@ public class Main {
         final double aspect_ratio = 16.0 / 9.0;
         final int image_width = 400;
         final int image_height = (int) (image_width / aspect_ratio);
+
+        // World
+        HitableList world = new HitableList();
+        world.add(new Sphere(new Vector3D(0,0,-1), 0.5));
+        world.add(new Sphere(new Vector3D(0,-100.5,-1), 100));
 
         // Camera
         double viewport_height = 2.0;
@@ -47,7 +53,7 @@ public class Main {
                 double u = (double) i / (image_width - 1);
                 double v = (double) j / (image_height - 1);
                 Ray r = new Ray(origin, lower_left_corner.add(horizontal.scalarMultiply(u).add(vertical.scalarMultiply(v)).subtract(origin)));
-                Color pixel_color = rayColor(r);
+                Color pixel_color = rayColor(r, world);
                 ppmImage += pixel_color.writeColor();
             }
         }
@@ -58,14 +64,13 @@ public class Main {
         fw.close();
     }
 
-    private static Color rayColor(Ray r) {
-        double t = hitSphere(new Vector3D(0,0,-1), 0.5, r);
-        if (t > 0.0) {
-            Vector3D N = r.at(t).subtract(new Vector3D(0,0,-1));
-            return new Color(new Vector3D(N.getX()+1, N.getY()+1, N.getZ()+1).scalarMultiply(0.5));
+    private static Color rayColor(Ray r, Hitable world) {
+        HitRecord rec = world.hit(r, 0, infinity, new HitRecord());
+        if (rec.hit) {
+            return new Color((new Vector3D(1,1,1).add(rec.normal)).scalarMultiply(0.5));
         }
-        Vector3D unit_direction = r.direction;
-        t = 0.5*(unit_direction.getY() + 1.0);
+        Vector3D unitDirection = r.direction;
+        double t = 0.5*(unitDirection.getY() + 1.0);
         Color color1 = new Color(1.0, 1.0, 1.0);
         Color color2 = new Color(0.5, 0.7, 1.0);
         return new Color(color1.colorVector.scalarMultiply(1.0 - t).add(color2.colorVector.scalarMultiply(t)));

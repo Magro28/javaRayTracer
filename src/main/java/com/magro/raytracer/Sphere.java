@@ -30,7 +30,7 @@ public class Sphere implements Hitable{
      * @return
      */
     @Override
-    public boolean hit(Ray r, double t_min, double t_max, HitRecord rec) {
+    public HitRecord hit(Ray r, double t_min, double t_max, HitRecord rec) {
         Vector3D oc = r.origin.subtract(center);
 
         double a = lengthSquared(r.direction);
@@ -39,7 +39,8 @@ public class Sphere implements Hitable{
         double discriminant = (half_b * half_b) - (a * c);
 
         if (discriminant < 0) {
-            return false;
+            rec.hit=false;
+            return rec;
         }
         double sqrtd = sqrt(discriminant);
         // Find the nearest root that lies in the acceptable range.
@@ -47,13 +48,15 @@ public class Sphere implements Hitable{
         if (root < t_min || t_max < root) {
             root = (-half_b + sqrtd) / a;
             if (root < t_min || t_max < root)
-                return false;
+                rec.hit=false;
+                return rec;
         }
         rec.t = root;
         rec.p = r.at(rec.t);
         Vector3D outward_normal = (rec.p.subtract(center)).scalarMultiply(1.0 / radius);
         rec.setFaceNormal(r, outward_normal);
-        return true;
+        rec.hit=true;
+        return rec;
 
     }
 

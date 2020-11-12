@@ -2,41 +2,57 @@ package com.magro.raytracer;
 
 import java.util.LinkedList;
 
-public class HitableList implements Hitable{
+public class HitableList implements Hitable {
 
     public LinkedList<Hitable> objects;
 
-    public HitableList(){
-        this.objects=new LinkedList<>();
+    public HitableList() {
+        this.objects = new LinkedList<>();
     }
 
-    public HitableList(Hitable object){
-        this.objects=new LinkedList<>();
+    public HitableList(Hitable object) {
+        this.objects = new LinkedList<>();
         this.objects.add(object);
     }
 
-    public void add(Hitable object){
+    public void add(Hitable object) {
         this.objects.add(object);
     }
 
-    public void clear(){
+    public void clear() {
         this.objects.clear();
     }
 
+    /*
+   bool hittable_list::hit(const ray& r, double t_min, double t_max, hit_record& rec) const {
+    hit_record temp_rec;
+    bool hit_anything = false;
+    auto closest_so_far = t_max;
+
+    for (const auto& object : objects) {
+        if (object->hit(r, t_min, closest_so_far, temp_rec)) {
+            hit_anything = true;
+            closest_so_far = temp_rec.t;
+            rec = temp_rec;
+        }
+    }
+
+    return hit_anything;
+}
+}
+     */
     @Override
-    public boolean hit(Ray r, double t_min, double t_max, HitRecord rec) {
+    public HitRecord hit(Ray r, double t_min, double t_max, HitRecord rec) {
         HitRecord tempRec = new HitRecord();
-        boolean hitAnything = false;
         double closestSoFar = t_max;
 
-        for (Hitable object : objects){
-            if (object.hit(r,t_min,t_max,tempRec)){
-                hitAnything = true;
+        for (Hitable object : objects) {
+            if (object.hit(r, t_min, closestSoFar, tempRec).hit) {
                 closestSoFar = tempRec.t;
                 rec = tempRec;
+                break;
             }
         }
-
-        return hitAnything;
+        return rec;
     }
 }
