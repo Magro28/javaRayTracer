@@ -5,6 +5,11 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
+/**
+ * A hitable sphere
+ *
+ * @author Mario Groß
+ */
 public class Sphere implements Hitable{
     public Vector3D center;
     public double radius;
@@ -16,6 +21,14 @@ public class Sphere implements Hitable{
         this.radius = radius;
     }
 
+    /**
+     * Returns true when hit by a Ray. Also fills the HitRecord info
+     * @param r
+     * @param t_min
+     * @param t_max
+     * @param rec
+     * @return
+     */
     @Override
     public boolean hit(Ray r, double t_min, double t_max, HitRecord rec) {
         Vector3D oc = r.origin.subtract(center);
@@ -43,11 +56,12 @@ public class Sphere implements Hitable{
         return true;
 
     }
-    public double length(Vector3D v)  {
+
+    private double length(Vector3D v)  {
         return sqrt(lengthSquared(v));
     }
 
-    public double lengthSquared(Vector3D v)  {
+    private double lengthSquared(Vector3D v)  {
         return pow(v.getX(),2) + pow(v.getY(),2) + pow(v.getZ(),2);
     }
 }

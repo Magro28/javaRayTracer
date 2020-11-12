@@ -13,7 +13,7 @@ import static java.lang.Math.sqrt;
 /**
  * Raytracer main class
  *
- * @Mario Groß
+ * @author Mario Groß
  */
 public class Main {
 

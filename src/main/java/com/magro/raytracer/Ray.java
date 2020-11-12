@@ -2,6 +2,11 @@ package com.magro.raytracer;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * A ray of light in time
+ *
+ * @author Mario Groß
+ */
 public class Ray {
 
     public Vector3D origin;

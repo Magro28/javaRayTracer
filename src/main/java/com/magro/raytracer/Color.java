@@ -3,6 +3,11 @@ package com.magro.raytracer;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * Color Vector
+ *
+ * @author Mario Groß
+ */
 public class Color {
 
     public Vector3D colorVector;

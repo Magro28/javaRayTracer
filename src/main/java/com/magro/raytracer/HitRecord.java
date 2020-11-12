@@ -2,6 +2,11 @@ package com.magro.raytracer;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * Infos about the hit
+ *
+ * @author Mario Groß
+ */
 public class HitRecord {
     public Vector3D p;
     public Vector3D normal;
