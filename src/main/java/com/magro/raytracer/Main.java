@@ -6,6 +6,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import static com.magro.raytracer.Utils.infinity;
 import static java.lang.Math.pow;
@@ -23,6 +24,7 @@ public class Main {
         final double aspect_ratio = 16.0 / 9.0;
         final int image_width = 400;
         final int image_height = (int) (image_width / aspect_ratio);
+        final int samplesPerPixel = 10;
 
         // World
         HitableList world = new HitableList();
@@ -30,31 +32,26 @@ public class Main {
         world.add(new Sphere(new Vector3D(0,-100.5,-1), 100));
 
         // Camera
-        double viewport_height = 2.0;
-        double viewport_width = aspect_ratio * viewport_height;
-        double focal_length = 1.0;
-
-        Vector3D origin = new Vector3D(0d, 0d, 0d);
-        Vector3D horizontal = new Vector3D(viewport_width, 0, 0);
-        Vector3D vertical = new Vector3D(0, viewport_height, 0);
-
-        // lower_left_corner = origin - horizontal/2 - vertical/2 - vec3(0, 0, focal_length);
-        Vector3D lower_left_corner = origin.subtract(horizontal.scalarMultiply(0.5))
-                .subtract(vertical.scalarMultiply(0.5))
-                .subtract(new Vector3D(0, 0, focal_length));
-
+        Camera cam = new Camera();
 
         // Render
         String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";
-
+        Random rnd = new Random();
+        rnd.nextDouble();
         for (int j = image_height - 1; j >= 0; --j) {
             System.out.println("\rScanlines remaining: " + j);
             for (int i = 0; i < image_width; ++i) {
-                double u = (double) i / (image_width - 1);
-                double v = (double) j / (image_height - 1);
-                Ray r = new Ray(origin, lower_left_corner.add(horizontal.scalarMultiply(u).add(vertical.scalarMultiply(v)).subtract(origin)));
-                Color pixel_color = rayColor(r, world);
-                ppmImage += pixel_color.writeColor();
+                Vector3D colorVector = new Vector3D(0, 0, 0);
+                for (int s = 0; s < samplesPerPixel; ++s) {
+                    double u = ((double)i + rnd.nextDouble()) / (image_width-1);
+                    double v = ((double)j + rnd.nextDouble()) / (image_height-1);
+                    Ray r = cam.getRay(u, v);
+                    Color rayCol = rayColor(r, world);
+                    colorVector = colorVector.add(rayCol.colorVector);
+                    Color color = new Color(colorVector);
+                    ppmImage += color.writeColor(color,samplesPerPixel);
+
+                }
             }
         }
         File file = new File("./image.ppm");
