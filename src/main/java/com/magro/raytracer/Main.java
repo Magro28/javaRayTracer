@@ -1,6 +1,5 @@
 package com.magro.raytracer;
 
-import org.apache.commons.math3.analysis.function.Sqrt;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.File;
@@ -24,7 +23,7 @@ public class Main {
         final double aspect_ratio = 16.0 / 9.0;
         final int image_width = 400;
         final int image_height = (int) (image_width / aspect_ratio);
-        final int samplesPerPixel = 100;
+        final int samplesPerPixel = 100; //antialiasing
 
         // World
         HitableList world = new HitableList();
@@ -38,10 +37,11 @@ public class Main {
         String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";
         Random rnd = new Random();
         rnd.nextDouble();
-        for (int j = image_height - 1; j >= 0; --j) { //image_height
+        for (int j = image_height - 1; j >= 0; --j) {
             System.out.println("\rScanlines remaining: " + j);
             for (int i = 0; i < image_width; ++i) {
                 Vector3D colorVector = new Vector3D(0, 0, 0);
+                //antialiasing comes here
                 for (int s = 0; s < samplesPerPixel; ++s) {
                     double u = ((double)i + rnd.nextDouble()) / (image_width-1);
                     double v = ((double)j + rnd.nextDouble()) / (image_height-1);
