@@ -26,13 +26,6 @@ public class Color {
         this.colorVector = new Vector3D(x,y,z);
     }
 
-    /*
-    public String writeColor(){
-        return writeColor(this.colorVector);
-    }
-    public String writeColor(Vector3D vector3D) {
-        return "" + (int) (vector3D.getX()*255.999d) +" "+(int) (vector3D.getY()*255.999d)+" "+(int) (vector3D.getZ()*255.999d)+"\n" ;
-    }*/
     public String writeColor(Color pixelColor, int samplesPerPixel){
         double r = pixelColor.colorVector.getX();
         double g = pixelColor.colorVector.getY();
