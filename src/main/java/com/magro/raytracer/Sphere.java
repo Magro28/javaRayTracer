@@ -2,6 +2,7 @@ package com.magro.raytracer;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+import static com.magro.raytracer.Utils.lengthSquared;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -60,11 +61,5 @@ public class Sphere implements Hitable{
 
     }
 
-    private double length(Vector3D v)  {
-        return sqrt(lengthSquared(v));
-    }
 
-    private double lengthSquared(Vector3D v)  {
-        return pow(v.getX(),2) + pow(v.getY(),2) + pow(v.getZ(),2);
-    }
 }
