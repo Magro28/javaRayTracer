@@ -24,7 +24,7 @@ public class Main {
         final double aspect_ratio = 16.0 / 9.0;
         final int image_width = 400;
         final int image_height = (int) (image_width / aspect_ratio);
-        final int samplesPerPixel = 10;
+        final int samplesPerPixel = 100;
 
         // World
         HitableList world = new HitableList();
@@ -38,7 +38,7 @@ public class Main {
         String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";
         Random rnd = new Random();
         rnd.nextDouble();
-        for (int j = image_height - 1; j >= 0; --j) {
+        for (int j = image_height - 1; j >= 0; --j) { //image_height
             System.out.println("\rScanlines remaining: " + j);
             for (int i = 0; i < image_width; ++i) {
                 Vector3D colorVector = new Vector3D(0, 0, 0);
@@ -48,10 +48,9 @@ public class Main {
                     Ray r = cam.getRay(u, v);
                     Color rayCol = rayColor(r, world);
                     colorVector = colorVector.add(rayCol.colorVector);
-                    Color color = new Color(colorVector);
-                    ppmImage += color.writeColor(color,samplesPerPixel);
-
                 }
+                Color color = new Color(colorVector);
+                ppmImage += color.writeColor(color,samplesPerPixel);
             }
         }
         File file = new File("./image.ppm");

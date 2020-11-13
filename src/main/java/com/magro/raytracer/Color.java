@@ -39,12 +39,13 @@ public class Color {
         double b = pixelColor.colorVector.getZ();
 
         // Divide the color by the number of samples.
-        double scale = 1.0 / samplesPerPixel;
+        double scale = 1.0 / (double) samplesPerPixel;
         r *= scale;
         g *= scale;
         b *= scale;
 
-        return "" + (int) (256 * clamp(r,0.0,0.999)) +" "+(int) (256 * clamp(g,0.0,0.999))+" "+(int) (256 * clamp(b,0.0,0.999))+"\n" ;
+        String colorString = "" + (int) (256.0 * clamp(r, 0.0, 0.999)) + " " + (int) (256.0 * clamp(g, 0.0, 0.999)) + " " + (int) (256.0 * clamp(b, 0.0, 0.999)) + "\n";
+        return colorString;
 
     }
 }

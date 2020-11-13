@@ -7,7 +7,7 @@ public class Camera {
     private Vector3D lower_left_corner;
     private Vector3D horizontal;
     private Vector3D vertical;
-
+    
     public Camera() {
         double aspect_ratio = 16.0 / 9.0;
         double viewport_height = 2.0;
