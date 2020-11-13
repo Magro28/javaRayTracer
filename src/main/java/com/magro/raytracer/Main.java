@@ -7,8 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-import static com.magro.raytracer.Utils.infinity;
-import static com.magro.raytracer.Utils.randomInUnitSphere;
+import static com.magro.raytracer.Utils.*;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -67,9 +66,9 @@ public class Main {
             return new Color(0,0,0);
         }
 
-        HitRecord rec = world.hit(r, 0, infinity, new HitRecord());
+        HitRecord rec = world.hit(r, 0.001, infinity, new HitRecord());
         if (rec.hit) {
-            Vector3D target = rec.p.add(rec.normal).add(randomInUnitSphere());
+            Vector3D target = rec.p.add(randomInHemisphere(rec.normal));
             return new Color(rayColor(new Ray(rec.p, target.subtract(rec.p)), world, depth-1).colorVector.scalarMultiply(0.5));
         }
         Vector3D unitDirection = r.direction;
