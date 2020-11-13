@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import static com.magro.raytracer.Utils.infinity;
+import static com.magro.raytracer.Utils.randomInUnitSphere;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -24,6 +25,7 @@ public class Main {
         final int image_width = 400;
         final int image_height = (int) (image_width / aspect_ratio);
         final int samplesPerPixel = 100; //antialiasing
+        final int maxDepth=50; //recursive depth of child rays
 
         // World
         HitableList world = new HitableList();
@@ -46,7 +48,7 @@ public class Main {
                     double u = ((double)i + rnd.nextDouble()) / (image_width-1);
                     double v = ((double)j + rnd.nextDouble()) / (image_height-1);
                     Ray r = cam.getRay(u, v);
-                    Color rayCol = rayColor(r, world);
+                    Color rayCol = rayColor(r, world, maxDepth);
                     colorVector = colorVector.add(rayCol.colorVector);
                 }
                 Color color = new Color(colorVector);
@@ -60,10 +62,15 @@ public class Main {
         fw.close();
     }
 
-    private static Color rayColor(Ray r, Hitable world) {
+    private static Color rayColor(Ray r, Hitable world, int depth) {
+        if (depth <= 0){
+            return new Color(0,0,0);
+        }
+
         HitRecord rec = world.hit(r, 0, infinity, new HitRecord());
         if (rec.hit) {
-            return new Color((new Vector3D(1,1,1).add(rec.normal)).scalarMultiply(0.5));
+            Vector3D target = rec.p.add(rec.normal).add(randomInUnitSphere());
+            return new Color(rayColor(new Ray(rec.p, target.subtract(rec.p)), world, depth-1).colorVector.scalarMultiply(0.5));
         }
         Vector3D unitDirection = r.direction;
         double t = 0.5*(unitDirection.getY() + 1.0);

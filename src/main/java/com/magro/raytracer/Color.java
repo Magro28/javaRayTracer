@@ -4,6 +4,7 @@ package com.magro.raytracer;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import static com.magro.raytracer.Utils.clamp;
+import static java.lang.Math.sqrt;
 
 /**
  * Color Vector
@@ -31,11 +32,11 @@ public class Color {
         double g = pixelColor.colorVector.getY();
         double b = pixelColor.colorVector.getZ();
 
-        // Divide the color by the number of samples.
+        // Divide the color by the number of samples and gamma-correct for gamma=2.0.
         double scale = 1.0 / (double) samplesPerPixel;
-        r *= scale;
-        g *= scale;
-        b *= scale;
+        r = sqrt(scale * r);
+        g = sqrt(scale * g);
+        b = sqrt(scale * b);
 
         String colorString = "" + (int) (256.0 * clamp(r, 0.0, 0.999)) + " " + (int) (256.0 * clamp(g, 0.0, 0.999)) + " " + (int) (256.0 * clamp(b, 0.0, 0.999)) + "\n";
         return colorString;
