@@ -65,4 +65,10 @@ public class Utils {
     public static double lengthSquared(Vector3D v) {
         return pow(v.getX(), 2) + pow(v.getY(), 2) + pow(v.getZ(), 2);
     }
+
+    public static boolean nearZero(Vector3D v) {
+        // Return true if the vector is close to zero in all dimensions.
+        final double s = 1e-8;
+        return (Math.abs(v.getX()) < s) && (Math.abs(v.getY()) < s) && (Math.abs(v.getZ()) < s);
+    }
 }

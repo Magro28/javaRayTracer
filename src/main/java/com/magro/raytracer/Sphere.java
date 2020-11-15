@@ -1,9 +1,9 @@
 package com.magro.raytracer;
 
+import com.magro.raytracer.materials.Material;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import static com.magro.raytracer.Utils.lengthSquared;
-import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 /**

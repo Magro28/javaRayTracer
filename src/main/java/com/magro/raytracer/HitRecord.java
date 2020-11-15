@@ -1,5 +1,6 @@
 package com.magro.raytracer;
 
+import com.magro.raytracer.materials.Material;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 /**
