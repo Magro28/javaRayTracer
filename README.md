@@ -13,5 +13,5 @@ Diffuse materials are supported which modulate light with their own base color. 
 
 ### Metal materials
 
-## Referenz
+## Reference
 As a reference I'm using this nice book about raytracing: https://raytracing.github.io/books/RayTracingInOneWeekend.html
