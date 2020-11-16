@@ -12,6 +12,7 @@ Diffuse materials are supported which modulate light with their own base color. 
 ![Diffuse Material!](docs/diffusemat.png)
 
 ### Metal materials
-
+Metal materials are implemented with a new scattered reflection method. Their fuzziness can be parameterized.\
+ ![Diffuse Material!](docs/metalmat.png)
 ## Reference
 As a reference I'm using this nice book about raytracing: https://raytracing.github.io/books/RayTracingInOneWeekend.html

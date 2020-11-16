@@ -34,8 +34,8 @@ public class Main {
         //Materials
         Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
         Material materialCenter = new Lambertian(new Color(0.7, 0.3, 0.3));
-        Material materialLeft   = new Metal(new Color(0.8, 0.8, 0.8));
-        Material materialRight  = new Metal(new Color(0.8, 0.6, 0.2));
+        Material materialLeft   = new Metal(new Color(0.8, 0.8, 1),0);
+        Material materialRight  = new Metal(new Color(1, 1, 1), 0.7);
 
         // World
         HitableList world = new HitableList();
