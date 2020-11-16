@@ -45,14 +45,19 @@ public class HitableList implements Hitable {
     public HitRecord hit(Ray r, double t_min, double t_max, HitRecord rec) {
         HitRecord tempRec = new HitRecord();
         double closestSoFar = t_max;
+        boolean hitAnything = false;
 
         for (Hitable object : objects) {
-            if (object.hit(r, t_min, closestSoFar, tempRec).hit) {
-                closestSoFar = tempRec.t;
-                rec = tempRec;
-                break;
+            HitRecord hit = object.hit(r, t_min, closestSoFar, tempRec);
+            if (hit.hit) {
+                hitAnything = true;
+                if (hit.t < closestSoFar) {
+                    closestSoFar = hit.t;
+                    rec = hit;
+                }
             }
         }
+        rec.hit = hitAnything;
         return rec;
     }
 }

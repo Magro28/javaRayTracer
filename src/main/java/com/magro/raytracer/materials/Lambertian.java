@@ -18,16 +18,16 @@ public class Lambertian implements Material {
 
 
     @Override
-    public Scatter scatter(Ray r_in, HitRecord rec, Color attenuation, Ray scattered) {
+    public Scatter scatter(Ray r_in, HitRecord rec) {
         Vector3D scatterDirection = rec.normal.add(Utils.randomUnitVector());
 
         // Catch degenerate scatter direction
-        if (nearZero(scatterDirection))
+        if (nearZero(scatterDirection)) {
             scatterDirection = rec.normal;
+        }
 
-        scattered = new Ray(rec.p, scatterDirection);
-        attenuation = albedo;
-        Scatter scatter = new Scatter(true, attenuation, scattered);
+        Ray scattered = new Ray(rec.p, scatterDirection);
+        Scatter scatter = new Scatter(true, albedo, scattered);
         return scatter;
     }
 }

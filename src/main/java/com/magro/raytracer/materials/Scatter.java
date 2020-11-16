@@ -5,6 +5,10 @@ import com.magro.raytracer.Ray;
 
 public class Scatter {
 
+    public  Scatter(){
+
+    }
+
     public Scatter(boolean hit, Color color, Ray scattered) {
         this.hit = hit;
         this.color = color;

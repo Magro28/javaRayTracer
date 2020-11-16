@@ -6,6 +6,6 @@ import com.magro.raytracer.Ray;
 
 public interface Material {
 
-    Scatter scatter(Ray r_in, HitRecord rec, Color color, Ray scattered);
+    Scatter scatter(Ray r_in, HitRecord rec);
 
 }
