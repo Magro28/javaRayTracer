@@ -1,5 +1,9 @@
 package com.magro.raytracer;
 
+import com.magro.raytracer.materials.Lambertian;
+import com.magro.raytracer.materials.Material;
+import com.magro.raytracer.materials.Metal;
+import com.magro.raytracer.materials.Scatter;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.File;
@@ -26,10 +30,20 @@ public class Main {
         final int samplesPerPixel = 100; //antialiasing
         final int maxDepth=50; //recursive depth of child rays
 
+
+        //Materials
+        Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
+        Material materialCenter = new Lambertian(new Color(0.7, 0.3, 0.3));
+        Material materialLeft   = new Metal(new Color(0.8, 0.8, 1),0);
+        Material materialRight  = new Metal(new Color(1, 1, 1), 0.7);
+
         // World
         HitableList world = new HitableList();
-        world.add(new Sphere(new Vector3D(0,0,-1), 0.5));
-        world.add(new Sphere(new Vector3D(0,-100.5,-1), 100));
+        world.add(new Sphere(new Vector3D( 0.0, -100.5, -1.0), 100.0, materialGround));
+        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, materialCenter));
+        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, materialLeft));
+        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, materialRight));
+
 
         // Camera
         Camera cam = new Camera();
@@ -68,8 +82,13 @@ public class Main {
 
         HitRecord rec = world.hit(r, 0.001, infinity, new HitRecord());
         if (rec.hit) {
-            Vector3D target = rec.p.add(randomInHemisphere(rec.normal));
-            return new Color(rayColor(new Ray(rec.p, target.subtract(rec.p)), world, depth-1).colorVector.scalarMultiply(0.5));
+            Scatter scatter = rec.material.scatter(r, rec);
+            if(scatter.hit){
+                return new Color(Utils.vectorMultiply(scatter.color.colorVector, rayColor(scatter.scattered, world, depth-1).colorVector));
+            }
+            else {
+                return new Color(0,0,0);
+            }
         }
         Vector3D unitDirection = r.direction;
         double t = 0.5*(unitDirection.getY() + 1.0);

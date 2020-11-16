@@ -30,6 +30,10 @@ public class Utils {
     }
 
 
+    public static Vector3D vectorMultiply(Vector3D v1, Vector3D v2){
+        return new Vector3D(v1.getX() * v2.getX(),v1.getY() * v2.getY(),v1.getZ() * v2.getZ());
+    }
+
     public static Vector3D randomVector() {
         return new Vector3D(rnd.nextDouble(), rnd.nextDouble(), rnd.nextDouble());
     }
@@ -64,5 +68,16 @@ public class Utils {
 
     public static double lengthSquared(Vector3D v) {
         return pow(v.getX(), 2) + pow(v.getY(), 2) + pow(v.getZ(), 2);
+    }
+
+    public static boolean nearZero(Vector3D v) {
+        // Return true if the vector is close to zero in all dimensions.
+        final double s = 1e-8;
+        return (Math.abs(v.getX()) < s) && (Math.abs(v.getY()) < s) && (Math.abs(v.getZ()) < s);
+    }
+
+    // v - 2*dot(v,n)*n
+    public static Vector3D reflect(Vector3D v, Vector3D n) {
+        return v.subtract(n.scalarMultiply(v.dotProduct(n)*2));
     }
 }

@@ -1,5 +1,6 @@
 package com.magro.raytracer;
 
+import com.magro.raytracer.materials.Material;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 /**
@@ -13,6 +14,7 @@ public class HitRecord {
     public Vector3D normal;
     public double t;
     public boolean front_face;
+    public Material material;
 
     public void setFaceNormal(Ray r, Vector3D outward_normal) {
         this.front_face = (r.direction.dotProduct(outward_normal)) < 0;

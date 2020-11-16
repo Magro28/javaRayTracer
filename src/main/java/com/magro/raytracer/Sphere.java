@@ -1,9 +1,9 @@
 package com.magro.raytracer;
 
+import com.magro.raytracer.materials.Material;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import static com.magro.raytracer.Utils.lengthSquared;
-import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 /**
@@ -14,12 +14,14 @@ import static java.lang.Math.sqrt;
 public class Sphere implements Hitable{
     public Vector3D center;
     public double radius;
+    public Material material;
 
     public Sphere(){}
 
-    public Sphere(Vector3D center, double radius) {
+    public Sphere(Vector3D center, double radius, Material material) {
         this.center=center;
         this.radius = radius;
+        this.material = material;
     }
 
     /**
@@ -57,6 +59,9 @@ public class Sphere implements Hitable{
         Vector3D outward_normal = (rec.p.subtract(center)).scalarMultiply(1.0 / radius);
         rec.setFaceNormal(r, outward_normal);
         rec.hit=true;
+        rec.material = material;
+
+
         return rec;
 
     }
