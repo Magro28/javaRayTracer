@@ -1,6 +1,6 @@
 # javaRayTracer
 
-In this project I will code a little ray tracer in good old plain Java.
+In this project I will code a little ray tracer in good old plain Java. Is it fast? God no. Java is really not the best language for a resource hungry raytracer but I just wanted to refresh my Java skills a bit and learn about raytracing. Can it be optimized? Yes of course, especially multithreading or using a GPU should bring a lot of performance but this is for another time. 
 
 ## Features
 ### Antialising
