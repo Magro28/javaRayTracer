@@ -13,6 +13,11 @@ Diffuse materials are supported which modulate light with their own base color. 
 
 ### Metal materials
 Metal materials are implemented with a new scattered reflection method. Their fuzziness can be parameterized.\
- ![Diffuse Material!](docs/metalmat.png)
+ ![Metal Material!](docs/metalmat.png)
+ 
+### Dielectric materials
+Dielectric materials represent things like glass, water or diamonds. When they are hit by light, the ray is randomly splitted into a reflected or a refracted ray. The refraction is implemented in a method which describes Snell's Law. Reflectance is calculated by Schlicks approaximation.\
+![Dielectric Material!](docs/glassmat.png)
+ 
 ## Reference
 As a reference I'm using this nice book about raytracing: https://raytracing.github.io/books/RayTracingInOneWeekend.html
