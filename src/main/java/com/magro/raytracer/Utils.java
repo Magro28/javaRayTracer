@@ -9,7 +9,7 @@ import static java.lang.Math.sqrt;
 
 public class Utils {
 
-    private static Random rnd = new Random();
+    public static Random rnd = new Random();
 
     // Constants
     public static final double infinity = Double.POSITIVE_INFINITY;
@@ -80,4 +80,19 @@ public class Utils {
     public static Vector3D reflect(Vector3D v, Vector3D n) {
         return v.subtract(n.scalarMultiply(v.dotProduct(n)*2));
     }
+
+    public static Vector3D refract(Vector3D uv, Vector3D n, double etaiOverEtat) {
+        double cos_theta = Math.min(uv.scalarMultiply(-1.0).dotProduct(n), 1.0);
+        Vector3D r_out_perp =  (uv.add(n.scalarMultiply(cos_theta))).scalarMultiply(etaiOverEtat);
+        Vector3D r_out_parallel = n.scalarMultiply(-1.0*sqrt(Math.abs(1.0 - lengthSquared(r_out_perp))));
+        return r_out_perp.add(r_out_parallel);
+    }
+
+    // Use Schlick's approximation for reflectance.
+    public static double reflectance(double cosine, double ref_idx) {
+        double r0 = (1-ref_idx) / (1+ref_idx);
+        r0 = r0*r0;
+        return r0 + (1-r0)*pow((1 - cosine),5);
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.magro.raytracer;
 
-import com.magro.raytracer.materials.Lambertian;
-import com.magro.raytracer.materials.Material;
-import com.magro.raytracer.materials.Metal;
-import com.magro.raytracer.materials.Scatter;
+import com.magro.raytracer.materials.*;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.File;
@@ -34,8 +31,8 @@ public class Main {
         //Materials
         Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
         Material materialCenter = new Lambertian(new Color(0.7, 0.3, 0.3));
-        Material materialLeft   = new Metal(new Color(0.8, 0.8, 1),0);
-        Material materialRight  = new Metal(new Color(1, 1, 1), 0.7);
+        Material materialLeft  = new Metal(new Color(1, 1, 1), 0.2);
+        Material materialRight   = new Dielectric(3);
 
         // World
         HitableList world = new HitableList();
