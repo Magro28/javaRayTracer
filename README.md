@@ -16,7 +16,7 @@ Metal materials are implemented with a new scattered reflection method. Their fu
  ![Metal Material!](docs/metalmat.png)
  
 ### Dielectric materials
-Dielectric materials represent things like glass, water or diamonds. When they are hit by light, the ray is randomly splitted into a reflected or a refracted ray. The refraction is implemented in a method which describes Snell's Law..\
+Dielectric materials represent things like glass, water or diamonds. When they are hit by light, the ray is randomly splitted into a reflected or a refracted ray. The refraction is implemented in a method which describes Snell's Law. Reflectance is calculated by Schlicks approaximation.\
 ![Dielectric Material!](docs/glassmat.png)
  
 ## Reference
