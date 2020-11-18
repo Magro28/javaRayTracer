@@ -23,7 +23,7 @@ Dielectric materials represent things like glass, water or crystals. When they a
 ![Dielectric Material!](docs/glassmat.png)
 
 ### Positional camera
-The camera is positional with standard look-from, look-at, up parameters and can be adjusted with field of view and zooming.\
+The camera is positional with standard look-from, look-at and up parameters and can be adjusted with field of view and zooming.\
 ![Positional Camera!](docs/camera.png)
 
 ## Reference
