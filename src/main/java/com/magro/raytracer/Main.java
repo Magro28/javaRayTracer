@@ -30,20 +30,21 @@ public class Main {
 
         //Materials
         Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
-        Material materialCenter = new Lambertian(new Color(0.7, 0.3, 0.3));
-        Material materialLeft  = new Metal(new Color(1, 1, 1), 0.2);
-        Material materialRight   = new Dielectric(3);
+        Material lambertian1 = new Lambertian(new Color(0.1, 0.2, 0.8));
+        Material metal1  = new Metal(new Color(1, 1, 1), 0.0);
+        Material dielectric1   = new Dielectric(3);
 
         // World
         HitableList world = new HitableList();
         world.add(new Sphere(new Vector3D( 0.0, -100.5, -1.0), 100.0, materialGround));
-        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, materialCenter));
-        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, materialLeft));
-        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, materialRight));
+        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, lambertian1));
+        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, dielectric1));
+        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   -0.45, dielectric1));
+        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, metal1));
 
 
-        // Camera
-        Camera cam = new Camera();
+        // Camera (lookFrom, lookAt, vup, fov (field of view and zooming), aspect_ratio
+        Camera cam = new Camera(new Vector3D(-2,2,1),new Vector3D(0,0,-1),new Vector3D(0,1,0),20.0, aspect_ratio);
 
         // Render
         String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";

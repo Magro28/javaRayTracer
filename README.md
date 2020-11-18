@@ -21,6 +21,10 @@ Metal materials are implemented with a new scattered reflection method. Their fu
 ### Dielectric materials
 Dielectric materials represent things like glass, water or crystals. When they are hit by light, the ray is randomly splitted into a reflected or a refracted ray. The refraction is implemented in a method which describes Snell's Law. Reflectance is calculated by Schlicks approaximation.\
 ![Dielectric Material!](docs/glassmat.png)
- 
+
+### Positional camera
+The camera is positional with standard look-from, look-at, up parameters and can be adjusted with field of view and zooming.
+![Positional Camera!](docs/camera.png)
+
 ## Reference
 As a reference I'm using this nice book about raytracing: https://raytracing.github.io/books/RayTracingInOneWeekend.html
