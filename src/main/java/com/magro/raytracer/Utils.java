@@ -62,6 +62,15 @@ public class Utils {
             return inUnitSphere.scalarMultiply(-1);
     }
 
+    public static Vector3D randomInUnitDisk() {
+        while (true) {
+            //rnd(-1,1) = Min + (int)(Math.random() * ((Max - Min) + 1))
+            Vector3D p = new Vector3D(-1 + rnd.nextDouble()*((1 - -1)+1), -1 + rnd.nextDouble()*((1 - -1)+1), 0);
+            if (lengthSquared(p) >= 1) continue;
+            return p;
+        }
+    }
+
     public static double length(Vector3D v) {
         return sqrt(lengthSquared(v));
     }

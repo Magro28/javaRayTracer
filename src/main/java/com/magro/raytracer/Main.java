@@ -43,8 +43,15 @@ public class Main {
         world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, metal1));
 
 
-        // Camera (lookFrom, lookAt, vup, fov (field of view and zooming), aspect_ratio
-        Camera cam = new Camera(new Vector3D(-2,2,1),new Vector3D(0,0,-1),new Vector3D(0,1,0),20.0, aspect_ratio);
+        // Camera lookFrom, lookAt, vup, fov (field of view and zooming), aspect_ratio, aperture, dist_to_focus
+        Vector3D lookfrom = new Vector3D(3,3,2);
+        Vector3D lookat = new Vector3D(0,0,-1);
+        Vector3D vup= new Vector3D(0,1,0);
+        double dist_to_focus = Utils.length(lookfrom.subtract(lookat));
+        double aperture = 2.0;
+        double fov = 20.0;
+
+        Camera cam = new Camera(lookfrom, lookat, vup, fov, aspect_ratio,aperture,dist_to_focus);
 
         // Render
         String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";
