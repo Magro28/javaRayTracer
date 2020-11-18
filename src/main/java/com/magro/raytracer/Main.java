@@ -30,20 +30,31 @@ public class Main {
 
         //Materials
         Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
-        Material materialCenter = new Lambertian(new Color(0.7, 0.3, 0.3));
-        Material materialLeft  = new Metal(new Color(1, 1, 1), 0.2);
-        Material materialRight   = new Dielectric(3);
+        Material lambertian1 = new Lambertian(new Color(0.7, 0.3, 0.3));
+        Material metal1  = new Metal(new Color(1, 1, 1), 0.2);
+        Material dielectric1   = new Dielectric(3);
+
+        /*
+        world.add(make_shared<sphere>(point3( 0.0, -100.5, -1.0), 100.0, material_ground));
+world.add(make_shared<sphere>(point3( 0.0,    0.0, -1.0),   0.5, material_center));
+world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0),   0.5, material_left));
+world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0), -0.45, material_left));
+world.add(make_shared<sphere>(point3( 1.0,    0.0, -1.0),   0.5, material_right));
+
+camera cam(point3(-2,2,1), point3(0,0,-1), vec3(0,1,0), 90, aspect_ratio);
+         */
 
         // World
         HitableList world = new HitableList();
         world.add(new Sphere(new Vector3D( 0.0, -100.5, -1.0), 100.0, materialGround));
-        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, materialCenter));
-        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, materialLeft));
-        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, materialRight));
+        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, lambertian1));
+        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, dielectric1));
+        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   -0.45, dielectric1));
+        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, metal1));
 
 
-        // Camera
-        Camera cam = new Camera();
+        // Camera (lookFrom, lookAt, vup, fov, aspect_ratio
+        Camera cam = new Camera(new Vector3D(-2,2,1),new Vector3D(0,0,-1),new Vector3D(0,1,0),90.0, aspect_ratio);
 
         // Render
         String ppmImage = "P3\n" + image_width + " " + image_height + "\n255\n";
