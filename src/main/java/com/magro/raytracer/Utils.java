@@ -39,7 +39,11 @@ public class Utils {
     }
 
     public static Vector3D randomVector(double min, double max) {
-        return new Vector3D(min + (max - min) * rnd.nextDouble(), min + (max - min) * rnd.nextDouble(), min + (max - min) * rnd.nextDouble());
+        return new Vector3D(randomRange(min, max), randomRange(min, max), randomRange(min, max));
+    }
+
+    public static double randomRange(double min, double max){
+        return min + (max - min) * rnd.nextDouble();
     }
 
     public static Vector3D randomInUnitSphere() {
@@ -65,7 +69,7 @@ public class Utils {
     public static Vector3D randomInUnitDisk() {
         while (true) {
             //rnd(-1,1) = Min + (int)(Math.random() * ((Max - Min) + 1))
-            Vector3D p = new Vector3D(-1 + rnd.nextDouble()*((1 - -1)+1), -1 + rnd.nextDouble()*((1 - -1)+1), 0);
+            Vector3D p = new Vector3D(randomRange(-1, 1), randomRange(-1, 1), 0);
             if (lengthSquared(p) >= 1) continue;
             return p;
         }

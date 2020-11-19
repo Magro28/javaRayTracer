@@ -21,34 +21,35 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         // Image
-        final double aspect_ratio = 16.0 / 9.0;
-        final int image_width = 400;
+        final double aspect_ratio = 3.0 / 2.0;
+        final int image_width = 600;
         final int image_height = (int) (image_width / aspect_ratio);
-        final int samplesPerPixel = 100; //antialiasing
+        final int samplesPerPixel = 50; //antialiasing
         final int maxDepth=50; //recursive depth of child rays
 
+        //Testing world
+//        //Materials
+//        Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
+//        Material lambertian1 = new Lambertian(new Color(0.1, 0.2, 0.8));
+//        Material metal1  = new Metal(new Color(1, 1, 1), 0.0);
+//        Material dielectric1   = new Dielectric(3);
+//
+//        // World
+//        HitableList world = new HitableList();
+//        world.add(new Sphere(new Vector3D( 0.0, -100.5, -1.0), 100.0, materialGround));
+//        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, lambertian1));
+//        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, dielectric1));
+//        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   -0.45, dielectric1));
+//        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, metal1));
 
-        //Materials
-        Material materialGround = new Lambertian(new Color(0.8, 0.8, 0.0));
-        Material lambertian1 = new Lambertian(new Color(0.1, 0.2, 0.8));
-        Material metal1  = new Metal(new Color(1, 1, 1), 0.0);
-        Material dielectric1   = new Dielectric(3);
-
-        // World
-        HitableList world = new HitableList();
-        world.add(new Sphere(new Vector3D( 0.0, -100.5, -1.0), 100.0, materialGround));
-        world.add(new Sphere(new Vector3D( 0.0,    0.0, -1.0),   0.5, lambertian1));
-        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   0.5, dielectric1));
-        world.add(new Sphere(new Vector3D(-1.0,    0.0, -1.0),   -0.45, dielectric1));
-        world.add(new Sphere(new Vector3D( 1.0,    0.0, -1.0),   0.5, metal1));
-
+        HitableList world = new WorldGenerator().generateRandomWorld();
 
         // Camera lookFrom, lookAt, vup, fov (field of view and zooming), aspect_ratio, aperture, dist_to_focus
-        Vector3D lookfrom = new Vector3D(3,3,2);
-        Vector3D lookat = new Vector3D(0,0,-1);
+        Vector3D lookfrom = new Vector3D(13,2,3);
+        Vector3D lookat = new Vector3D(0,0,0);
         Vector3D vup= new Vector3D(0,1,0);
-        double dist_to_focus = Utils.length(lookfrom.subtract(lookat));
-        double aperture = 2.0;
+        double dist_to_focus = 10.0; //Utils.length(lookfrom.subtract(lookat));
+        double aperture = 0.1;
         double fov = 20.0;
 
         Camera cam = new Camera(lookfrom, lookat, vup, fov, aspect_ratio,aperture,dist_to_focus);
