@@ -5,6 +5,9 @@ In this project I coded a little ray tracer in good old plain Java. Is it fast? 
 The final rendering of the picture above (600x400 pixels) with 50 samples by pixel antialiasing took 8 minutes. Double the size took already almost 1 hour.\
 If you like to render your own image check out the WorldGenerator class which I used for the scene building.
 
+## Dependencies
+Only apache.commons.math3 for the Vector3D class. Was too lazy to code all the vector math myself. 😅
+
 ## Features
 ### Objects
 It only supports spheres for now
