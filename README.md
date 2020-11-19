@@ -1,6 +1,9 @@
 # javaRayTracer
 
-In this project I will code a little ray tracer in good old plain Java. Is it fast? God no. Java is really not the best language for a resource hungry raytracer but I just wanted to refresh my Java skills a bit and learn about raytracing. Can it be optimized? Yes of course, especially multithreading or using a GPU should bring a lot of performance but this is for another time. 
+In this project I coded a little ray tracer in good old plain Java. Is it fast? God no. Java is really not the best language for a resource hungry raytracer but I just wanted to refresh my Java skills a bit and learn about raytracing. Can it be optimized? Yes of course, especially multithreading or using a GPU should bring a lot of performance but this is for another time.\
+![Final Rendering!](docs/finalrendersmall.png)\
+The final rendering of the picture above (600x400 pixels) with 50 samples by pixel antialiasing took 8 minutes. Double the size took already almost 1 hour.\
+If you like to render your own pixel, check out the WorldGenerator class which I used for the scene building.
 
 ## Features
 ### Objects
@@ -27,4 +30,4 @@ The camera is positional with standard look-from, look-at and up parameters and 
 ![Positional Camera!](docs/camera.png)
 
 ## Reference
-As a reference I'm using this nice book about raytracing: https://raytracing.github.io/books/RayTracingInOneWeekend.html
+As a reference I used this nice book about raytracing: https://raytracing.github.io/books/RayTracingInOneWeekend.html
